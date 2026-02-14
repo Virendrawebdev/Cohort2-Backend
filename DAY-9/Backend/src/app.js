@@ -3,9 +3,19 @@
  */
 const express =require('express')
 const noteModel=require('./models/note.model')
+const cors=require('cors')
+const path =require('path')
 
 const app=express()
+app.use(cors())
+
 app.use(express.json())
+/**
+ http://localhost:3000/assets/index-DLBLZQ6.js
+ http://localhost:3000/assets/index-wq3MWG09.css
+ */
+app.use(express.static('./public'))
+
 
 /*
 -POST/api/ notes
@@ -58,11 +68,16 @@ app.delete('/api/notes/:id', async (req,res)=>{
 
 app.patch('/api/notes/:id', async(req,res)=>{
     const id =req.params.id
-    const {description}=req.body
-   await noteModel.findByIdAndUpdate(id, {description})
+    const {title, description}=req.body
+   await noteModel.findByIdAndUpdate(id, {title, description})
     res.status(200).json({
         message:'note updated successfully'
     })
 })
+ console.log(__dirname) //C:\Users\Virendra\OneDrive\Desktop\Cohort2-Backend\DAY-9\Backend\srcn
+app.use('*name', (req,res)=>{
+    res.sendFile(path.join(__dirname,'..','/public/index.html'))
+})
+
 
 module.exports=app
