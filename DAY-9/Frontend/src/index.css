@@ -18,6 +18,7 @@ html{
   gap: 1rem;
   padding-block: 1rem;
   padding-inline: 3rem;
+  flex-wrap: wrap;
 }
 .note{
   background-color: white;
@@ -25,4 +26,10 @@ html{
   border-radius: 0.7rem;
   max-width: 20rem;
   color: black;
+}
+.note-create-form{
+  display: flex;
+  gap: 1rem;
+  padding-block: 1rem;
+  padding-inline: 3rem;
 }
