@@ -1,0 +1,127 @@
+==>Authentication
+   ==>register (1.user ka data save karna.  2.token user ko dena)
+   ==>login
+   ==>logout(token blacklisting)
+   ==>[OTP based registeration]
+
+==>Post
+   ==>create
+   ==>can see the feed
+   ==>like post (collection array)   
+   ==>save post
+
+==>Users
+   ==>followers
+   ==>following
+
+..................................................................................................................
+   .....................BASIC SERVER and DATABASE setup start.......................................... 
+   1.npm init -y
+   2.npm i express -   create server
+   3.npm i mongoose -  connect server and database
+   4.create a SRC folder inside folder app.js file
+   5.app.js => const express =require('express')     
+            => const app => express();
+            => app.use(express.json());   //middleware
+            =>module.export =app;
+   6.server.js =>const app =require('./src/app');
+               =>app.listen(3000,()=>{
+                console.log()
+               })
+               =>fisrt line -require('dotenv').config();  ---.env file variable access lene ke liye.
+
+   7.package.json =>scripts{
+                    "dev":"npx nodemon server.js"  
+                    } 
+   8.inside scr folder create config folder inside folder database.js file
+   9.database.js =>const mongoose = require('mongoose'); 
+                 =>mongoose.connect(process.env.MONGO_URL);
+   10.env => npm i dotenv
+          => MONGO_URI=""  
+
+  .....................BASIC SERVER and DATABASE setup done.......................................... 
+  ........................MODELS Schema folder setup........................................................
+   11.inside src folder create a models folder inside user.model.js file
+   12.user.model.js=>const mongoose =require('mongoose');
+                   =>const userSchema= new mongoose.Schema({
+                    username:string
+                   }) 
+                   =>const userModel =mongoose.model("user",userSchema)
+                   =>module.exports=userModel 
+
+ ........................MODELS Schema folder setup done........................................................  
+ ..........................ROUTES Folder setup satrt............................................................
+ inside src folder craete a routes folder inside auth.routes.js file
+  13.auth.routes.js=>const express =require('express');
+                   =>const authRouter =express.Router()         --all api create karne k liye
+                   =>const userModel =require('../models/user.model')
+                   =>const crypto =require('crypto')     --hash password ke liye
+                   =>authRouter.post('/register', async(req,res)=>{
+                    const {email,username,password,bio,profileImage}=req.body
+
+                    const isUserExistsByEmail=await userModel.findOne({email})
+                    if (isUserExistsByEmail){
+                        return res.status(409).json({
+                            message:"user already exists with same email"
+                        })
+                    }
+                    const isUserExistByUsername= await userModel.findOne({name})
+                    if (isUserExistByUsernam){
+                        return res.status(409).json({
+                            message:"user already exists with same username"
+                        })
+                    }
+
+
+                   })      ---destructure ka rahe hai old version
+
+                   short version
+                   const isUserAreadyExist =await userModel.findOne({
+                   $or:[{email},
+                        {username}
+                       ]
+                   });
+                   if (isUserAreadyExist){
+                      return res.status(409).json({
+                      message:"User already exists" + (isUserAreadyExist.email ==
+                      email ? "Email already exists" : "username already exists")
+                            })
+                     }
+
+      14.  ...................HASH.........................................
+    // hash password using crypto module and sha256 algorithm and 
+    // convert it to hexadecimal string before saving to database for security reasons 
+    // and to prevent storing plain text passwords in the database 
+    // which can be easily compromised in case of a data breach
+           =>const crypto =require('crypto') 
+           =>const hash = crypto.createHash('sha256).update(password).digest('hex)  
+
+    //token is generated using the jsonwebtoken library, where the payload contains the user's id and 
+    // the secret key is used to sign the token. The token can then be used for authentication purposes 
+    // in subsequent requests to verify the user's identity and grant access to protected routes or resources. 
+    //user ka data hona chahiye data unique hona chahiye jese id ya email ya username taki token generate kar sake
+    
+      15. token create =>npm i jsonwebtoken 
+                       =>const jwt =require('jsonwebtoken')
+                       =>const token =jwt.sign({
+                         id:user._id,
+                       },process.env.JWT_SECRET,{
+                         expiresIn:"1d"
+                       }) 
+      //cookie is set using the res.cookie() method, where the first argument is the name of the cookie ("token" in this case) and the second argument is the value of the cookie (the generated token). 
+    // The cookie will be sent to the client's browser and stored there, allowing the client to include the token in subsequent requests for authentication purposes.
+      
+      16.token ko store karne cookies => npm i cookie-parser 
+                                      =>app.js me const cookieParser =require('cookie-parser')
+                                      =>app.use(cookieParser()) 
+
+      17.const authRouter =require('./routes/auth.routes')  in app.js  
+        app.use("/api/auth",authRouter) //authRouter ko app main use karne ke liye
+    
+    //why we dont send password in response because it is a security 
+    // risk to expose sensitive information like passwords in API responses. in bullet points
+    // 1. Security: Exposing passwords in API responses can lead to security vulnerabilities, as attackers could potentially intercept the response and gain access to user credentials.
+    // 2. Privacy: Users have a right to privacy, and sharing their passwords in API responses violates that privacy. It can lead to unauthorized access to their accounts if the response is compromised.
+    // 3. Best Practices: It is a best practice in software development to avoid sending sensitive information like passwords in API responses. Instead, you should use secure authentication methods and only return necessary user information without exposing sensitive data.
+
+    18.inside src folder create controllers folder and inside controller folder create auth.controller.js
