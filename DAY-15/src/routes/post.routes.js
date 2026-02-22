@@ -12,4 +12,17 @@ const upload =multer({storage:multer.memoryStorage()}) //ye line multer ko memor
 
 postRouter.post("/",upload.single("image"), postController.createPostController)
 
+
+/**
+ * Get/api/posts/ [protected]
+ */
+postRouter.get("/",postController.getPostController)
+
+/**
+ * GET /api/posts/details/:postid
+ * -return an detail about specific post with the id. also check weather the post belon to the user that the request come from 
+ */
+
+postRouter.get("/details/:postId", postController.getPostDetailsController)
+
 module.exports = postRouter
