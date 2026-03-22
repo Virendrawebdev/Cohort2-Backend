@@ -4,9 +4,3 @@ const model = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash-lite",
   apiKey: process.env.GEMINI_API_KEY
 });
-
-export async function testAi(){
-    model.invoke("explain 50 words sheryians coding school?").then((response) => {
-      console.log(response.text);
-    })
-}
