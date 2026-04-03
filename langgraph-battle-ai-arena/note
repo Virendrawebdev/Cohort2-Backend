@@ -1,0 +1,25 @@
+1.npm init -y
+2.npm i -D typescript tsx
+3.npx tsc --init
+4.setup tsconfig.json  "rootDir": ".",
+                       "outDir": "./dist",
+5.npm i express
+6.make a folder src => app.ts
+7.npm i -D @types/express
+8.make file server.ts
+9.setup package.json => "dev": "tsx server.ts"
+10.npm run dev
+11.http://localhost:3000/health =>{status: "ok"}
+// Basic Express server setup with TypeScipt done.
+12.npm install @lanchain/google @langchain/core
+13.setup Ai Studio=> GOOGLE_API_KEY=your-api-key
+14..env file created with your api key added in it. npm i dotenv for access env variable in code.
+15.npm i dotenv
+16.create a folder name src=>config=>config.ts=>import {config} from "dotenv"; config();
+17.create a folder name src=>services=>models.service.ts import { ChatGoogle } from "@langchain/google";
+   import config from "../config/config.js";
+18.npm install @lanchain/mistralai =>models.service.ts import { ChatMstralAI } from "@langchain/mistralai";
+19.npm install @langchain/cohere =>models.service.ts import {ChatCohere} from "@langchain/cohere";
+20.create a file src=>services=>graph.ai.servie.ts
+21.npm i @langchain/langgraph @langchain/core
+
