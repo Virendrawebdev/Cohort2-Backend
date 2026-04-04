@@ -5,7 +5,7 @@
                        "outDir": "./dist",
 5.npm i express
 6.make a folder src => app.ts
-7.npm i -D @types/express
+7.npm i -D @types/express @types/node
 8.make file server.ts
 9.setup package.json => "dev": "tsx server.ts"
 10.npm run dev
@@ -23,3 +23,8 @@
 20.create a file src=>services=>graph.ai.servie.ts
 21.npm i @langchain/langgraph @langchain/core
 
+steps folder
+=>langgraph-ai-battle-arena=>src=>server.ts
+=>src=>app.ts=>ai=>
+=>ai=>model.ai.ts
+=>config=>config.ts
