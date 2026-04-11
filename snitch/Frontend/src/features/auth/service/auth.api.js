@@ -16,3 +16,11 @@ export async function register({email, contact, password, fullname}){
     })
     return response.data
 }
+
+export async function login({ email, password }) {
+    const response = await authapiinstance.post("/login", {
+        email, password
+    })
+
+    return response.data
+}
