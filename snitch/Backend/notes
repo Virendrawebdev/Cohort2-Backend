@@ -1,0 +1,19 @@
+1.npm init-y
+2.npm i express mongoose dotenv cookie-parser jsonwebtoken
+3.setup package.json
+4.create src folder create file app.js
+5.create server.js file in root folder and import app and listen to port 3000
+6.create config folder in src and create database.js file and connect to database and create config.js import
+dotenv and export config object with MONGO_URI
+7.create .env file and add MONGO_URI 
+8.create models folder in src and create user.model.js file and create user schema and export user model
+9.create routes folder in src and create auth.routes.js file and create auth routes and export auth router
+10.create controllers folder in src and create auth.controller.js file and create auth controller functions and export
+11.import auth routes in app.js and use auth routes with /api/auth prefix
+12.npm i express-validator
+13.create folder validator in src and create auth.validator.js file and create validation rules for auth routes and export
+14.import auth validators in auth.routes.js and use validation rules in auth routes
+15.npm i bcryptjs
+16.use bcryptjs to hash password in auth.controller.js before saving user to database
+17.use bcryptjs to compare password in auth.controller.js during login
+
