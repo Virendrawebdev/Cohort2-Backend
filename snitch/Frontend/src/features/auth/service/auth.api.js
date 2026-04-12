@@ -2,10 +2,10 @@ import axios from "axios";
 
 const authapiinstance = axios.create({
     baseURL:"http://localhost:3000/api/auth",
-    wuithCredentials:true,
+    withCredentials:true,
 })
 
-export async function register({email, contact, password, fullname}){
+export async function register({email, contact, password, fullname, isSeller}){
 
     const response  =await authapiinstance.post("/register",{
         email,
