@@ -6,7 +6,7 @@ const Login = () => {
     const { handleLogin } = useAuth();
     const navigate = useNavigate();
 
-    const [ formData, setFormData ] = useState({
+    const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
@@ -15,7 +15,7 @@ const Login = () => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [ name ]: value
+            [name]: value
         }));
     };
 
@@ -70,7 +70,7 @@ const Login = () => {
                         <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-white">Enter the Vault</h1>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                         {/* Email */}
                         <div className="flex flex-col">
                             <label className="text-sm text-[#d0c6ab] mb-2 font-medium">Email Address</label>
@@ -101,6 +101,20 @@ const Login = () => {
                                 placeholder="••••••••"
                             />
                         </div>
+
+                        {/* Google */}
+                        <button
+                            type="button"
+                            className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 rounded hover:bg-gray-200"
+                        >
+                            <a></a>
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/281/281764.png"
+                                className="w-5 h-5"
+                                alt="google"
+                            />
+                            <a href="/api/auth/google">Continue with Google</a>
+                        </button>
 
                         {/* Submit Button */}
                         <button

@@ -9,7 +9,7 @@ const Register = () => {
     const navigate = useNavigate()
     const { error, loading } = useSelector(state => state.auth)
 
-    const [ formData, setFormData ] = useState({
+    const [formData, setFormData] = useState({
         fullName: '',
         contactNumber: '',
         email: '',
@@ -21,7 +21,7 @@ const Register = () => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [ name ]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? checked : value
         }));
     };
 
@@ -75,7 +75,7 @@ const Register = () => {
                         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">Elevate Your Style</h1>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                         {/* Full Name */}
                         <div className="flex flex-col">
                             <label className="text-sm text-[#d0c6ab] mb-2 font-medium">Full Name</label>
@@ -133,7 +133,7 @@ const Register = () => {
                         </div>
 
                         {/* Is Seller Checkbox */}
-                        <div className="flex items-center gap-4 mt-2 group w-max cursor-pointer">
+                        <div className="flex items-center gap-2 mt-2 group w-max cursor-pointer">
                             <div className="relative flex items-center">
                                 <input
                                     type="checkbox"
@@ -141,7 +141,7 @@ const Register = () => {
                                     id="isSeller"
                                     checked={formData.isSeller}
                                     onChange={handleChange}
-                                    className="peer appearance-none w-6 h-6 border border-[#4d4732] rounded bg-[#1c1b1b] md:bg-[#0e0e0e] lg:bg-[#0e0e0e] checked:bg-[#FFD700] checked:border-[#FFD700] cursor-pointer transition-colors duration-300 group-hover:border-[#FFD700]"
+                                    className="peer appearance-none w-6 h-4 border border-[#4d4732] rounded bg-[#1c1b1b] md:bg-[#0e0e0e] lg:bg-[#0e0e0e] checked:bg-[#FFD700] checked:border-[#FFD700] cursor-pointer transition-colors duration-300 group-hover:border-[#FFD700]"
                                 />
                                 <svg className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none opacity-0 peer-checked:opacity-100 text-[#221b00]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
@@ -150,7 +150,21 @@ const Register = () => {
                             <label htmlFor="isSeller" className="text-sm text-[#e5e2e1] group-hover:text-[#FFD700] cursor-pointer select-none transition-colors duration-300">Register as Seller</label>
                         </div>
 
-                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                        {error && <p className="text-red-500 text-sm">{error}</p>}
+
+                        {/* Google */}
+                        <button
+                            type="button"
+                            className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 rounded hover:bg-gray-200"
+                        >
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/281/281764.png"
+                                className="w-5 h-5"
+                                alt="google"
+                            />
+                            <a href="/api/auth/google">Continue with Google</a>
+                            
+                        </button>
 
                         {/* Submit Button */}
                         <button
@@ -161,7 +175,7 @@ const Register = () => {
                             {loading ? 'Signing Up...' : 'Sign Up'}
                         </button>
 
-                        <div className="text-center mt-2">
+                        <div className="text-center">
                             <a href="/login" className="text-sm text-[#999077] hover:text-[#FFD700] transition-colors border-b border-transparent hover:border-[#FFD700] py-0.5">
                                 Already have an account? Sign in
                             </a>
