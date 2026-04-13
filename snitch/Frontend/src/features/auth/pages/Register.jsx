@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from "../hook/useAuth"
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
+import ContinueWithGoogle from '../components/ContinueWithGoogle';
 
 const Register = () => {
 
@@ -152,19 +153,7 @@ const Register = () => {
 
                         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-                        {/* Google */}
-                        <button
-                            type="button"
-                            className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 rounded hover:bg-gray-200"
-                        >
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/281/281764.png"
-                                className="w-5 h-5"
-                                alt="google"
-                            />
-                            <a href="/api/auth/google">Continue with Google</a>
-                            
-                        </button>
+                        
 
                         {/* Submit Button */}
                         <button
@@ -174,6 +163,8 @@ const Register = () => {
                         >
                             {loading ? 'Signing Up...' : 'Sign Up'}
                         </button>
+                        {/* Google */}
+                        <ContinueWithGoogle/>
 
                         <div className="text-center">
                             <a href="/login" className="text-sm text-[#999077] hover:text-[#FFD700] transition-colors border-b border-transparent hover:border-[#FFD700] py-0.5">
