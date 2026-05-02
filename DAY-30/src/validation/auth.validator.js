@@ -21,10 +21,9 @@ export const registerValidator = [
             }
             const passwordRegex =/^(?=.*[A-Z])(?=.*\d).+$/
             if(!passwordRegex.test(value)){
-                throw new Error("password should contain at least one  uppercase letter and one number")
+                throw new Error("password should contain at least one uppercase letter and one number")
             }
             return true
         }).withMessage("password should be atleat 6 characters long and contain at least one uppercase and one number"),
         validate
-
     ]

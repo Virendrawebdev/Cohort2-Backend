@@ -7,8 +7,6 @@ addEventListener("mousemove", (e) => {
 
     x=clientX
     y=clientY
-    
-
 })
 
 function far(){

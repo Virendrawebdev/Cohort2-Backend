@@ -1,7 +1,6 @@
 import dotenv from "dotenv"
 
 dotenv.config()
-
 function handleError(err, req, res, next){
 
     const response ={
