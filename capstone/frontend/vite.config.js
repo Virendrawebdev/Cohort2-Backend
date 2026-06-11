@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [ react(), tailwindcss() ],
   server: {
     host: "0.0.0.0",
     port: 5173,
@@ -13,9 +13,9 @@ export default defineConfig({
       clientPort: 5173,
     },
     proxy: {
-        // REST API — forwarded to the backend/ingress
+      // REST API — forwarded to the local backend during development
       "/api": {
-        target: "http://127.0.0.1:80",
+        target: "https://127.0.0.1:80",
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {

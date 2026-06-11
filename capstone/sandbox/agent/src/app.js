@@ -13,6 +13,7 @@ const WORKING_DIR = '/workspace';
 
 const app = express();
 const httpServer = http.createServer(app);
+
 app.use(morgan('dev'));
 app.use(cors({
     methods: [ "GET", "POST", "PATCH", "DELETE" ],
@@ -30,12 +31,14 @@ const io = new Server(httpServer, {
 });
 
 
-app.get('/', (req, res)=> {
+app.get('/', (req, res) => {
     res.status(200).json({
-        message: 'Hello from sandbox agent',
+        message: 'Hello from sandbox agent!',
         status: 'success',
     });
 });
+
+
 
 const shell = process.env.SHELL || 'bash';
 
@@ -47,7 +50,6 @@ const ptyProcess = pty.spawn(shell, [], {
     cwd: "/workspace",
     env: process.env
 });
-
 
 ptyProcess.onData((data) => {
     io.emit('terminal-output', data);
@@ -80,9 +82,9 @@ io.on("connection", (socket) => {
  *     ]
  * }
  */
+app.get("/list-files", async (req, res) => {
 
-app.get('/list-files', async(req, res)=>{
-   const listFiles = async (dir, baseDir) => {
+    const listFiles = async (dir, baseDir) => {
         const entries = await fs.promises.readdir(dir, { withFileTypes: true });
         const files = [];
 
@@ -117,16 +119,20 @@ app.get('/list-files', async(req, res)=>{
             status: 'error',
         });
     }
+
 })
+
 
 /**
  * @route GET /read-files
  * @description Reads the content of all files requested in the query parameter 'files' and returns their content as a JSON object.
  * - eg. /read-files?files=file1.txt,/src/file2.txt
  */
-app.get('/read-files', async(req, res)=>{
+app.get("/read-files", async (req, res) => {
+
     const files = req.query.files;
-    if(!files) {
+
+    if (!files) {
         return res.status(400).json({
             message: 'No files specified in query parameter',
             status: 'error',
@@ -155,6 +161,7 @@ app.get('/read-files', async(req, res)=>{
     });
 
 })
+
 
 /**
  * @route PATCH /update-files
@@ -196,6 +203,7 @@ app.patch("/update-files", async (req, res) => {
     });
 })
 
+
 /**
  * @route POST /create-files
  * @description Creates new files with the content specified in the request body. The request body should contain a property 'files' with a JSON Array of objects, each object should have a 'file' property specifying the file path (relative to the working directory) and a 'content' property specifying the content for the new file.
@@ -232,8 +240,6 @@ app.post("/create-files", async (req, res) => {
         results,
     });
 })
-
-
 
 
 export default httpServer;

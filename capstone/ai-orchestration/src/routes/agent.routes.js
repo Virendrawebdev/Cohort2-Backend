@@ -24,7 +24,8 @@ agentRouter.post("/invoke", async (req, res) => {
         for await (const state of stream) {
             lastState = state;
         }
-         if (lastState?.messages?.length) {
+
+        if (lastState?.messages?.length) {
             const msgs = lastState.messages;
             for (let i = msgs.length - 1; i >= 0; i--) {
                 const m = msgs[i];
@@ -40,7 +41,7 @@ agentRouter.post("/invoke", async (req, res) => {
         res.end();
     } catch (error) {
         console.error("Error invoking agent:", error);
-         if (res.headersSent) {
+        if (res.headersSent) {
             res.end();
         } else {
             res.status(500).json({ error: "Failed to invoke agent" });

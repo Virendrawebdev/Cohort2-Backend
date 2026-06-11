@@ -7,11 +7,13 @@ export const listFiles = tool(
     async ({ }, config) => {
 
         const writer = config.context?.writer ?? (() => {});
-        writer("Listing files in project directory...\n")
-       
+
+        writer("Listing files in project directory...\n");
+
         const response = await axios.get(`http://sandbox-service-${config.context.projectId}:3000/list-files`)
-        
+
         writer("Files listed successfully." + "Files: " + response.data.files.join(",") + "\n");
+
         return JSON.stringify(response.data.files);
     },
     {
@@ -22,13 +24,14 @@ export const listFiles = tool(
 )
 
 export const readFiles = tool(
-    async ({ files: [] }, config) => {
+    async ({ files = [] }, config) => {
 
         const writer = config.context?.writer ?? (() => {});
-        writer("Reading specified files..."+ files.join(",") +"\n");
+
+        writer("Reading files..." + files.join(",") + "\n");
 
         const response = await axios.get(`http://sandbox-service-${config.context.projectId}:3000/read-files?files=` + files.join(","))
-        
+
         writer("Files read successfully.\n");
         return JSON.stringify(response.data);
     },
@@ -43,14 +46,17 @@ export const readFiles = tool(
 
 export const updateFiles = tool(
     async ({ files }, config) => {
+        const writer = config.context?.writer ?? (() => {});
 
-         const writer = config.context?.writer ?? (() => {});
-        writer("Updating specified files..."+ files.map(f => f.file).join(",") +"\n");
+        writer("Updating files..." + files.map(f => f.file).join(",") + "\n");
+
 
         const response = await axios.patch(`http://sandbox-service-${config.context.projectId}:3000/update-files`, {
             updates: files
         })
+
         writer("Files updated successfully.\n");
+
 
         return JSON.stringify(response.data.results);
     },
